@@ -1,0 +1,27 @@
+import Link from "next/link";
+import { Button } from "./Button";
+
+export function Sidebar() {
+  return (
+    <aside className="flex h-full w-56 flex-col gap-4 border-r border-gray-200 bg-white p-4">
+      <div className="text-lg font-bold text-neutral-800">Menú</div>
+      <nav className="flex flex-col gap-2 text-sm text-neutral-700">
+        <Link className="rounded-md px-3 py-2 hover:bg-gray-100" href="/home">
+          Home
+        </Link>
+        <Link className="rounded-md px-3 py-2 hover:bg-gray-100" href="/italian-jokes">
+          Italian Jokes
+        </Link>
+        <Link className="rounded-md px-3 py-2 hover:bg-gray-100" href="/section-2">
+          Sección 2
+        </Link>
+        <Link className="rounded-md px-3 py-2 hover:bg-gray-100" href="/section-3">
+          Sección 3
+        </Link>
+      </nav>
+      <div className="mt-auto">
+        <Button variant="ghost" className="text-left">Cerrar sesión</Button>
+      </div>
+    </aside>
+  );
+}
