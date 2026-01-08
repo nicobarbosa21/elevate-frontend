@@ -10,10 +10,10 @@ export function Sidebar() {
           Home
         </Link>
         <Link className="rounded-md px-3 py-2 hover:bg-gray-100" href="/italian-jokes">
-          Italian Jokes
+          Italian Jokes API
         </Link>
-        <Link className="rounded-md px-3 py-2 hover:bg-gray-100" href="/section-2">
-          Sección 2
+        <Link className="rounded-md px-3 py-2 hover:bg-gray-100" href="/harry-potter">
+          Harry Potter API
         </Link>
         <Link className="rounded-md px-3 py-2 hover:bg-gray-100" href="/section-3">
           Sección 3
