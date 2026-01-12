@@ -30,9 +30,11 @@ type Seniority = {
 type Props = {
     employees: Employee[];
     isLoading: boolean;
+    onEdit?: (e: Employee) => void;
+    onDelete?: (e: Employee) => void;
 };
 
-export function EmployeesTable({ employees, isLoading }: Props) {
+export function EmployeesTable({ employees, isLoading, onEdit, onDelete }: Props) {
     if (isLoading) return <div className="text-black">Loading...</div>;
     return (
       <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white">
@@ -46,6 +48,7 @@ export function EmployeesTable({ employees, isLoading }: Props) {
                 <th className="px-4 py-3 text-black">Job</th>
                 <th className="px-4 py-3 text-black">Country</th>
                 <th className="px-4 py-3 text-black">Seniority</th>
+                <th className="px-4 py-3 text-black">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -58,6 +61,22 @@ export function EmployeesTable({ employees, isLoading }: Props) {
                 <td className="px-4 py-3 text-black">{e.job?.title}</td>
                 <td className="px-4 py-3 text-black">{e.nationality?.country_name}</td>
                 <td className="px-4 py-3 text-black">{e.seniority?.level}</td>
+                <td className="px-4 py-3 text-black">
+                  <div className="flex gap-2">
+                    <button 
+                      className="rounded-md border px-3 py-1"
+                      onClick={() => onEdit?.(e)}
+                    >
+                      Edit
+                    </button>
+                    <button 
+                      className="ml-2 rounded-md border px-3 py-1 bg-red-500 text-white"
+                      onClick={() => onDelete?.(e)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
                 </tr>
             ))}
             {employees.length === 0 && (
@@ -72,4 +91,3 @@ export function EmployeesTable({ employees, isLoading }: Props) {
       </div>
     );
 }
-
