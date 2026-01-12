@@ -13,7 +13,7 @@ export default function ItalianJokes() {
   const { data: joke, error, isLoading, refetch } = useQuery<Joke>({
     queryKey: ['italianJokes'],
     queryFn: async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}random_joke`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}jokes/random_joke`);
       return response.json();
     },
   });

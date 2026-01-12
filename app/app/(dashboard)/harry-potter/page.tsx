@@ -18,10 +18,10 @@ export default function HarryPotter() {
     queryKey: [tab, search],
     queryFn: async () => {
       const endpoint =
-        tab === 'books' ? `${base}books/${search ? `${search}` : ''}` :
-        tab === 'characters' ? `${base}characters/${search ? `${search}` : ''}` :
-        `${base}spells/${search ? `${search}` : ''}`;
-    
+        tab === 'books' ? `${base}books/${search}` :
+        tab === 'characters' ? `${base}characters/${search}` :
+        `${base}spells/${search}`;
+
       const response = await fetch(endpoint);
       if (!response.ok) throw new Error('Error fetching data');
       return response.json();

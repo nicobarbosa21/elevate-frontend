@@ -1,0 +1,75 @@
+type Employee = {
+  id: number;
+  name: string;
+  last_name: string;
+  age: number;
+  dni: string;
+
+  job_id: number;
+  country_id: number;
+  seniority_id: number;
+
+  job?: Job;
+  nationality?: Nationality;
+  seniority?: Seniority;
+};
+
+type Job = {
+  id: number;
+  title: string;
+};
+
+type Nationality = {
+  country_name: string;
+};
+
+type Seniority = {
+  level: string;
+};
+
+type Props = {
+    employees: Employee[];
+    isLoading: boolean;
+};
+
+export function EmployeesTable({ employees, isLoading }: Props) {
+    if (isLoading) return <div className="text-black">Loading...</div>;
+    return (
+      <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+        <table className="min-w-full text-left text-sm text-black">
+            <thead className="bg-gray-100">
+            <tr>
+                <th className="px-4 py-3 text-black">Name</th>
+                <th className="px-4 py-3 text-black">Last Name</th>
+                <th className="px-4 py-3 text-black">Age</th>
+                <th className="px-4 py-3 text-black">DNI</th>
+                <th className="px-4 py-3 text-black">Job</th>
+                <th className="px-4 py-3 text-black">Country</th>
+                <th className="px-4 py-3 text-black">Seniority</th>
+            </tr>
+            </thead>
+            <tbody>
+            {employees.map((e) => (
+                <tr key={e.id} className="border-t">
+                <td className="px-4 py-3 text-black">{e.name}</td>
+                <td className="px-4 py-3 text-black">{e.last_name}</td>
+                <td className="px-4 py-3 text-black">{e.age}</td>
+                <td className="px-4 py-3 text-black">{e.dni}</td>
+                <td className="px-4 py-3 text-black">{e.job?.title}</td>
+                <td className="px-4 py-3 text-black">{e.nationality?.country_name}</td>
+                <td className="px-4 py-3 text-black">{e.seniority?.level}</td>
+                </tr>
+            ))}
+            {employees.length === 0 && (
+                <tr>
+                <td colSpan={7} className="px-4 py-3 text-center text-gray-500">
+                    No result
+                </td>
+                </tr>
+            )}
+            </tbody>
+        </table>
+      </div>
+    );
+}
+

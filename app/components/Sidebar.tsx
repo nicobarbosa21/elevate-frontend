@@ -15,8 +15,8 @@ export function Sidebar() {
         <Link className="rounded-md px-3 py-2 hover:bg-gray-100" href="/harry-potter">
           Harry Potter API
         </Link>
-        <Link className="rounded-md px-3 py-2 hover:bg-gray-100" href="/section-3">
-          Sección 3
+        <Link className="rounded-md px-3 py-2 hover:bg-gray-100" href="/employees">
+          Employees API
         </Link>
       </nav>
       <div className="mt-auto">
