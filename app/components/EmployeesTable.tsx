@@ -64,13 +64,13 @@ export function EmployeesTable({ employees, isLoading, onEdit, onDelete }: Props
                 <td className="px-4 py-3 text-black">
                   <div className="flex gap-2">
                     <button 
-                      className="rounded-md border px-3 py-1"
+                      className="rounded-md border px-3 py-1 hover:bg-gray-100 transition duration-200 cursor-pointer"
                       onClick={() => onEdit?.(e)}
                     >
                       Edit
                     </button>
                     <button 
-                      className="ml-2 rounded-md border px-3 py-1 bg-red-500 text-white"
+                      className="ml-2 rounded-md border px-3 py-1 bg-red-500 text-white hover:bg-red-600 transition duration-200 cursor-pointer"
                       onClick={() => onDelete?.(e)}
                     >
                       Delete

@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { EmployeesTable } from '@/components/EmployeesTable';
 import { EmployeeForm } from '@/components/EmployeeForm';
+import { apiFetch } from '@/lib/api';
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? '';
 
@@ -17,20 +18,20 @@ function toQuery(params: Record<string, any>) {
 
 async function createEmployeeAPI(payload: any) {
   const qs = toQuery(payload);
-  const res = await fetch(`${API}employees?${qs}`, { method: 'POST' });
+  const res = await apiFetch(`${API}employees?${qs}`, { method: 'POST' });
   if (!res.ok) throw new Error('Error creating employee');
   return res.json();
 }
 
 async function updateEmployeeAPI(employee_id: number, payload: any) {
   const qs = toQuery(payload);
-  const res = await fetch(`${API}employees/${employee_id}?${qs}`, { method: 'PUT' });
+  const res = await apiFetch(`${API}employees/${employee_id}?${qs}`, { method: 'PUT' });
   if (!res.ok) throw new Error('Error updating employee');
   return res.json();
 }
 
 async function deleteEmployeeAPI(employee_id: number) {
-  const res = await fetch(`${API}employees/${employee_id}`, { method: 'DELETE' });
+  const res = await apiFetch(`${API}employees/${employee_id}`, { method: 'DELETE' });
   if (!res.ok) throw new Error('Error deleting employee');
   return res.json();
 }
@@ -79,8 +80,7 @@ export default function Employees() {
   const { data: allData, isLoading: allLoading, error: allError } = useQuery({
     queryKey: ['employees_all'],
     queryFn: async () => {
-      const response = await fetch(`${API}employees`);
-      if (!response.ok) throw new Error('Error fetching data');
+      const response = await apiFetch(`${API}employees`);
       return response.json();
     },
   });
@@ -90,8 +90,7 @@ export default function Employees() {
     enabled: isSearchingByName,
     queryFn: async () => {
       const endpoint = `${API}employees/name/${trimmedName}`;
-      const response = await fetch(endpoint);
-      if (!response.ok) throw new Error('Error fetching data');
+      const response = await apiFetch(endpoint);
       return response.json();
     },
   });
@@ -101,8 +100,7 @@ export default function Employees() {
     enabled: isSearchingByLastName,
     queryFn: async () => {
       const endpoint = `${API}employees/last_name/${trimmedLastName}`;
-      const response = await fetch(endpoint);
-      if (!response.ok) throw new Error('Error fetching data');
+      const response = await apiFetch(endpoint);
       return response.json();
     },
   });
@@ -110,8 +108,7 @@ export default function Employees() {
   const { data: jobs = [], isLoading: jobsLoading } = useQuery({
     queryKey: ['jobs_all'],
     queryFn: async () => {
-      const res = await fetch(`${API}jobs`);
-      if (!res.ok) throw new Error('Error fetching jobs');
+      const res = await apiFetch(`${API}jobs`);
       return res.json();
     },
   });
@@ -119,8 +116,7 @@ export default function Employees() {
   const { data: nationalities = [], isLoading: natLoading } = useQuery({
     queryKey: ['nationalities_all'],
     queryFn: async () => {
-      const res = await fetch(`${API}nationalities`);
-      if (!res.ok) throw new Error('Error fetching nationalities');
+      const res = await apiFetch(`${API}nationalities`);
       return res.json();
     },
   });
@@ -128,8 +124,7 @@ export default function Employees() {
   const { data: seniorities = [], isLoading: senLoading } = useQuery({
     queryKey: ['seniorities_all'],
     queryFn: async () => {
-      const res = await fetch(`${API}seniorities`);
-      if (!res.ok) throw new Error('Error fetching seniorities');
+      const res = await apiFetch(`${API}seniorities`);
       return res.json();
     },
   });
@@ -215,7 +210,7 @@ export default function Employees() {
       />
 
       <button
-        className="rounded-md border px-4 py-2 bg-zinc-900 text-white"
+        className="rounded-md border px-4 py-2 bg-zinc-900 text-white hover:bg-zinc-800 transition duration-200 cursor-pointer"
         onClick={openCreate}
         >
         Add Employee

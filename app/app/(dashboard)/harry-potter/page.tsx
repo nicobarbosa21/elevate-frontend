@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { BooksTable } from '@/components/BooksTable';
 import { CharactersTable } from '@/components/CharactersTable';
 import { SpellsTable } from '@/components/SpellsTable';
+import { apiFetch } from '@/lib/api';
 
 type Tab = 'books' | 'characters' | 'spells';
 
@@ -22,8 +23,7 @@ export default function HarryPotter() {
         tab === 'characters' ? `${base}characters/${search}` :
         `${base}spells/${search}`;
 
-      const response = await fetch(endpoint);
-      if (!response.ok) throw new Error('Error fetching data');
+      const response = await apiFetch(endpoint);
       return response.json();
     },
   });

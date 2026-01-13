@@ -1,6 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import { apiFetch } from '@/lib/api';
 
 type Joke = {
   id: number;
@@ -13,7 +14,7 @@ export default function ItalianJokes() {
   const { data: joke, error, isLoading, refetch } = useQuery<Joke>({
     queryKey: ['italianJokes'],
     queryFn: async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}jokes/random_joke`);
+      const response = await apiFetch(`${process.env.NEXT_PUBLIC_API_URL}jokes/random_joke`);
       return response.json();
     },
   });

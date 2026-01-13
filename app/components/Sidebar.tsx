@@ -1,5 +1,7 @@
+'use client';
 import Link from "next/link";
 import { Button } from "./Button";
+import { logout } from "@/lib/auth";
 
 export function Sidebar() {
   return (
@@ -26,7 +28,7 @@ export function Sidebar() {
         </Link>
       </nav>
       <div className="mt-auto">
-        <Button variant="ghost" className="text-left">Cerrar sesión</Button>
+        <Button variant="ghost" className="text-left" onClick={logout}>Logout</Button>
       </div>
     </aside>
   );

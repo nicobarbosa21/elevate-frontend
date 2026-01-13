@@ -226,7 +226,7 @@ export function EmployeeForm({
           <div className="flex justify-end gap-2">
             <button
               type="button"
-              className="rounded-md border px-4 py-2 text-black"
+              className="rounded-md border px-4 py-2 text-black hover:bg-gray-100 transition duration-200 cursor-pointer disabled:cursor-not-allowed"
               onClick={onClose}
               disabled={disabled}
             >
@@ -235,7 +235,7 @@ export function EmployeeForm({
 
             <button
               type="submit"
-              className="rounded-md border px-4 py-2 bg-zinc-900 text-white"
+              className="rounded-md border px-4 py-2 bg-zinc-900 text-white hover:bg-zinc-800 transition duration-200 cursor-pointer disabled:cursor-not-allowed"
               disabled={disabled}
             >
               {mode === 'create' ? 'Create' : 'Save'}
