@@ -193,24 +193,24 @@ export default function Employees() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-3xl font-bold text-zinc-900">Employees</h1>
+      <h1 className="text-3xl font-bold">Employees</h1>
 
       <input
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder='Search by Name...'
-        className="border border-gray-300 rounded-md p-2 w-full text-black"
+        className="app-input"
       />
 
       <input
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
         placeholder='Search by Last Name...'
-        className="border border-gray-300 rounded-md p-2 w-full text-black"
+        className="app-input"
       />
 
       <button
-        className="rounded-md border px-4 py-2 bg-zinc-900 text-white hover:bg-zinc-800 transition duration-200 cursor-pointer"
+        className="app-btn app-btn-primary w-fit cursor-pointer"
         onClick={openCreate}
         >
         Add Employee

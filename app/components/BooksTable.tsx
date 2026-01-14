@@ -15,31 +15,31 @@ type Props = {
 };
 
 export function BooksTable({ books, isLoading }: Props) {
-  if (isLoading) return <div className="text-black">Loading...</div>;
+  if (isLoading) return <div className="app-muted">Loading...</div>;
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white">
-      <table className="min-w-full text-left text-sm text-black">
-        <thead className="bg-gray-100">
+    <div className="app-table-wrap">
+      <table className="app-table text-sm">
+        <thead>
           <tr>
-            <th className="px-4 py-3 text-black">Title</th>
-            <th className="px-4 py-3 text-black">Original title</th>
-            <th className="px-4 py-3 text-black">Release date</th>
-            <th className="px-4 py-3 text-black">Pages</th>
+            <th>Title</th>
+            <th>Original title</th>
+            <th>Release date</th>
+            <th>Pages</th>
           </tr>
         </thead>
         <tbody>
           {books.map((b) => (
-            <tr key={b.index} className="border-t">
-              <td className="px-4 py-3 text-black">{b.title}</td>
-              <td className="px-4 py-3 text-black">{b.originalTitle}</td>
-              <td className="px-4 py-3 text-black">{b.releaseDate}</td>
-              <td className="px-4 py-3 text-black">{b.pages}</td>
+            <tr key={b.index}>
+              <td>{b.title}</td>
+              <td>{b.originalTitle}</td>
+              <td>{b.releaseDate}</td>
+              <td>{b.pages}</td>
             </tr>
           ))}
           {books.length === 0 && (
             <tr>
-              <td colSpan={5} className="px-4 py-3 text-center text-gray-500">
+              <td colSpan={5} className="text-center app-muted">
                 No result
               </td>
             </tr>

@@ -35,23 +35,23 @@ export default function HarryPotter() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-3xl font-bold text-black">Harry Potter</h1>
-      <div className="flex gap-3 text-black">
+      <h1 className="text-3xl font-bold">Harry Potter</h1>
+      <div className="flex gap-3 flex-wrap">
         <button 
           onClick={() => handleTabChange('books')} 
-          className={tab === 'books' ? 'font-bold' : ''}
+          className={`app-btn ${tab === 'books' ? 'app-btn-soft' : 'app-btn-outline'} w-fit`}
         >
           Books
         </button>
         <button 
           onClick={() => handleTabChange('characters')} 
-          className={tab === 'characters' ? 'font-bold' : ''}
+          className={`app-btn ${tab === 'characters' ? 'app-btn-soft' : 'app-btn-outline'} w-fit`}
         >
           Characters
         </button>
         <button 
           onClick={() => handleTabChange('spells')}
-          className={tab === 'spells' ? 'font-bold' : ''}
+          className={`app-btn ${tab === 'spells' ? 'app-btn-soft' : 'app-btn-outline'} w-fit`}
         >
           Spells
         </button>
@@ -60,10 +60,10 @@ export default function HarryPotter() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder='Search...'
-        className='border rounded px-3 py-2 text-black'
+        className='app-input max-w-md'
       />
 
-      {error && <div>Error</div>}
+      {error && <div className="app-muted">Error</div>}
       {tab === 'books' && <BooksTable books={data ?? []} isLoading={isLoading}/>}
       {tab === 'characters' && <CharactersTable characters={data ?? []} isLoading={isLoading}/>}
       {tab === 'spells' && <SpellsTable spells={data ?? []} isLoading={isLoading}/>}

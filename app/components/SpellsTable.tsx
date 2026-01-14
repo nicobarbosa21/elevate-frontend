@@ -10,26 +10,26 @@ type Props = {
 };
 
 export function SpellsTable({ spells, isLoading }: Props) {
-    if (isLoading) return <div className="text-black">Loading...</div>;
+    if (isLoading) return <div className="app-muted">Loading...</div>;
     return (
-        <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white">
-        <table className="min-w-full text-left text-sm text-black">
-            <thead className="bg-gray-100">
+        <div className="app-table-wrap">
+        <table className="app-table text-sm">
+            <thead>
             <tr>
-                <th className="px-4 py-3 text-black">Spell</th>
-                <th className="px-4 py-3 text-black">Use</th>
+                <th>Spell</th>
+                <th>Use</th>
             </tr>
             </thead>
             <tbody>
             {spells.map((s) => (
-                <tr key={s.index} className="border-t">
-                <td className="px-4 py-3 text-black">{s.spell}</td>
-                <td className="px-4 py-3 text-black">{s.use}</td>
+                <tr key={s.index}>
+                <td>{s.spell}</td>
+                <td>{s.use}</td>
                 </tr>
             ))}
             {spells.length === 0 && (
                 <tr>
-                <td colSpan={2} className="px-4 py-3 text-center text-gray-500">
+                <td colSpan={2} className="text-center app-muted">
                     No result
                 </td>
                 </tr>

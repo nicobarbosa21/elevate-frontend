@@ -5,10 +5,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 export function Button({ variant = "primary", className = "", ...props }: Props) {
-  const base = "w-full rounded-lg px-4 py-2 text-sm font-semibold transition";
-  const styles =
-    variant === "primary"
-      ? "bg-neutral-800 text-white hover:bg-neutral-700"
-      : "bg-transparent text-neutral-800 hover:bg-neutral-100";
+  const base = "app-btn w-full text-sm";
+  const styles = variant === "primary" ? "app-btn-primary" : "app-btn-ghost";
   return <button className={`${base} ${styles} ${className}`} {...props} />;
 }

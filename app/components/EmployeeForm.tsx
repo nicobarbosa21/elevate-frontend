@@ -124,12 +124,12 @@ export function EmployeeForm({
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4">
-      <div className="w-full max-w-lg rounded-lg bg-white p-4 space-y-3">
+      <div className="app-card app-form-panel w-full max-w-lg p-4 space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-black">
+          <h2 className="text-xl font-semibold">
             {mode === 'create' ? 'Add employee' : 'Edit employee'}
           </h2>
-          <button className="text-black" onClick={onClose} disabled={disabled}>
+          <button className="app-btn app-btn-ghost px-3 py-2" onClick={onClose} disabled={disabled}>
             ✕
           </button>
         </div>
@@ -137,7 +137,7 @@ export function EmployeeForm({
         <form onSubmit={submit} className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
             <input
-              className="border p-2 text-black"
+              className="app-input"
               placeholder="Name"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -145,7 +145,7 @@ export function EmployeeForm({
             />
 
             <input
-              className="border p-2 text-black"
+              className="app-input"
               placeholder="Last name"
               value={form.last_name}
               onChange={(e) => setForm({ ...form, last_name: e.target.value })}
@@ -153,7 +153,7 @@ export function EmployeeForm({
             />
 
             <input
-              className="border p-2 text-black"
+              className="app-input"
               placeholder="Age"
               type="number"
               value={form.age}
@@ -163,7 +163,7 @@ export function EmployeeForm({
 
             <div className="space-y-1">
               <input
-                className="border p-2 text-black w-full"
+                className="app-input"
                 placeholder="DNI (7-8 digits)"
                 inputMode="numeric"
                 value={form.dni}
@@ -177,7 +177,7 @@ export function EmployeeForm({
             </div>
 
             <select
-              className="border p-2 text-black"
+              className="app-select"
               value={form.job_id}
               onChange={(e) => setForm({ ...form, job_id: e.target.value })}
               disabled={disabled}
@@ -191,7 +191,7 @@ export function EmployeeForm({
             </select>
 
             <select
-              className="border p-2 text-black"
+              className="app-select"
               value={form.country_id}
               onChange={(e) => setForm({ ...form, country_id: e.target.value })}
               disabled={disabled}
@@ -207,7 +207,7 @@ export function EmployeeForm({
             </select>
 
             <select
-              className="border p-2 text-black"
+              className="app-select"
               value={form.seniority_id}
               onChange={(e) => setForm({ ...form, seniority_id: e.target.value })}
               disabled={disabled}
@@ -226,7 +226,7 @@ export function EmployeeForm({
           <div className="flex justify-end gap-2">
             <button
               type="button"
-              className="rounded-md border px-4 py-2 text-black hover:bg-gray-100 transition duration-200 cursor-pointer disabled:cursor-not-allowed"
+              className="app-btn app-btn-ghost cursor-pointer disabled:cursor-not-allowed"
               onClick={onClose}
               disabled={disabled}
             >
@@ -235,7 +235,7 @@ export function EmployeeForm({
 
             <button
               type="submit"
-              className="rounded-md border px-4 py-2 bg-zinc-900 text-white hover:bg-zinc-800 transition duration-200 cursor-pointer disabled:cursor-not-allowed"
+              className="app-btn app-btn-primary cursor-pointer disabled:cursor-not-allowed"
               disabled={disabled}
             >
               {mode === 'create' ? 'Create' : 'Save'}

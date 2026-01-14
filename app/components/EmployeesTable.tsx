@@ -35,42 +35,42 @@ type Props = {
 };
 
 export function EmployeesTable({ employees, isLoading, onEdit, onDelete }: Props) {
-    if (isLoading) return <div className="text-black">Loading...</div>;
+    if (isLoading) return <div className="app-muted">Loading...</div>;
     return (
-      <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white">
-        <table className="min-w-full text-left text-sm text-black">
-            <thead className="bg-gray-100">
+      <div className="app-table-wrap">
+        <table className="app-table text-sm">
+            <thead>
             <tr>
-                <th className="px-4 py-3 text-black">Name</th>
-                <th className="px-4 py-3 text-black">Last Name</th>
-                <th className="px-4 py-3 text-black">Age</th>
-                <th className="px-4 py-3 text-black">DNI</th>
-                <th className="px-4 py-3 text-black">Job</th>
-                <th className="px-4 py-3 text-black">Country</th>
-                <th className="px-4 py-3 text-black">Seniority</th>
-                <th className="px-4 py-3 text-black">Actions</th>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>DNI</th>
+                <th>Job</th>
+                <th>Country</th>
+                <th>Seniority</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             {employees.map((e) => (
-                <tr key={e.id} className="border-t">
-                <td className="px-4 py-3 text-black">{e.name}</td>
-                <td className="px-4 py-3 text-black">{e.last_name}</td>
-                <td className="px-4 py-3 text-black">{e.age}</td>
-                <td className="px-4 py-3 text-black">{e.dni}</td>
-                <td className="px-4 py-3 text-black">{e.job?.title}</td>
-                <td className="px-4 py-3 text-black">{e.nationality?.country_name}</td>
-                <td className="px-4 py-3 text-black">{e.seniority?.level}</td>
-                <td className="px-4 py-3 text-black">
+                <tr key={e.id}>
+                <td>{e.name}</td>
+                <td>{e.last_name}</td>
+                <td>{e.age}</td>
+                <td>{e.dni}</td>
+                <td>{e.job?.title}</td>
+                <td>{e.nationality?.country_name}</td>
+                <td>{e.seniority?.level}</td>
+                <td>
                   <div className="flex gap-2">
                     <button 
-                      className="rounded-md border px-3 py-1 hover:bg-gray-100 transition duration-200 cursor-pointer"
+                      className="app-btn app-btn-soft px-3 py-1 cursor-pointer"
                       onClick={() => onEdit?.(e)}
                     >
                       Edit
                     </button>
                     <button 
-                      className="ml-2 rounded-md border px-3 py-1 bg-red-500 text-white hover:bg-red-600 transition duration-200 cursor-pointer"
+                      className="app-btn app-btn-danger px-3 py-1 cursor-pointer"
                       onClick={() => onDelete?.(e)}
                     >
                       Delete
@@ -81,7 +81,7 @@ export function EmployeesTable({ employees, isLoading, onEdit, onDelete }: Props
             ))}
             {employees.length === 0 && (
                 <tr>
-                <td colSpan={7} className="px-4 py-3 text-center text-gray-500">
+                <td colSpan={7} className="text-center app-muted">
                     No result
                 </td>
                 </tr>

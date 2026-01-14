@@ -19,8 +19,8 @@ export default function ItalianJokes() {
     },
   });
 
-  if (isLoading) {return <div className='text-black'>Loading...</div>;}
-  if (error) {return <div className='text-black'>Error loading jokes</div>;}
+  if (isLoading) {return <div className='app-muted'>Loading...</div>;}
+  if (error) {return <div className='app-muted'>Error loading jokes</div>;}
 
   const handleReload = () => {
     refetch();
@@ -28,17 +28,17 @@ export default function ItalianJokes() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-3xl font-bold text-zinc-900">Italian Jokes</h1>
+      <h1 className="text-3xl font-bold">Italian Jokes</h1>
       {joke && (
-        <div key={joke.id} className="p-4 border border-gray-200 rounded-md">
-          <p className="text-zinc-800">{joke.joke}</p>
-          <p className="text-sm text-gray-500 mt-2">Type: {joke.type}, Subtype: {joke.subtype}</p><br/>
+        <div key={joke.id} className="app-card p-5 space-y-3">
+          <p className="text-base">{joke.joke}</p>
+          <p className="text-sm app-muted">Type: {joke.type}, Subtype: {joke.subtype}</p>
           <button 
-            className="p-2 border border-gray-300 text-black hover:bg-gray-100 rounded"
+            className="app-btn app-btn-primary w-fit"
             onClick={handleReload}
           >
             Reload
-            </button>
+          </button>
         </div>
       )}
     </div>
