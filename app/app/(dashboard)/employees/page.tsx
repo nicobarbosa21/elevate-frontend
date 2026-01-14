@@ -4,43 +4,23 @@ import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { EmployeesTable } from '@/components/EmployeesTable';
 import { EmployeeForm } from '@/components/EmployeeForm';
-import { apiFetch } from '@/lib/api';
-
-const API = process.env.NEXT_PUBLIC_API_URL ?? '';
-
-function toQuery(params: Record<string, any>) {
-  const usp = new URLSearchParams();
-  Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined && value !== null && value !== '') usp.append(key, String(value));
-  });
-  return usp.toString();
-}
-
-async function createEmployeeAPI(payload: any) {
-  const qs = toQuery(payload);
-  const res = await apiFetch(`${API}employees?${qs}`, { method: 'POST' });
-  if (!res.ok) throw new Error('Error creating employee');
-  return res.json();
-}
-
-async function updateEmployeeAPI(employee_id: number, payload: any) {
-  const qs = toQuery(payload);
-  const res = await apiFetch(`${API}employees/${employee_id}?${qs}`, { method: 'PUT' });
-  if (!res.ok) throw new Error('Error updating employee');
-  return res.json();
-}
-
-async function deleteEmployeeAPI(employee_id: number) {
-  const res = await apiFetch(`${API}employees/${employee_id}`, { method: 'DELETE' });
-  if (!res.ok) throw new Error('Error deleting employee');
-  return res.json();
-}
+import {
+  fetchAllEmployees,
+  fetchEmployeesByName,
+  fetchEmployeesByLastName,
+  fetchJobs,
+  fetchNationalities,
+  fetchSeniorities,
+  createEmployee,
+  updateEmployee,
+  deleteEmployee,
+} from './employees_service';
 
 export default function Employees() {
   const queryClient = useQueryClient();
   
-  const[name, setName] = useState('');
-  const[lastName, setLastName] = useState('');
+  const [name, setName] = useState('');
+  const [lastName, setLastName] = useState('');
   
   const trimmedName = name.trim();
   const trimmedLastName = lastName.trim();
@@ -53,12 +33,7 @@ export default function Employees() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [initialValues, setInitialValues] = useState<any>(undefined);
 
-  const openCreate = () => {
-    setMode('create');
-    setEditingId(null);
-    setInitialValues(undefined);
-    setModalOpen(true);
-  };
+  const openCreate = () => {setMode('create'); setEditingId(null); setInitialValues(undefined); setModalOpen(true);};
 
   const openEdit = (e: any) => {
     setMode('edit');
@@ -79,58 +54,37 @@ export default function Employees() {
 
   const { data: allData, isLoading: allLoading, error: allError } = useQuery({
     queryKey: ['employees_all'],
-    queryFn: async () => {
-      const response = await apiFetch(`${API}employees`);
-      return response.json();
-    },
+    queryFn: fetchAllEmployees,
   });
 
   const { data: nameData, isLoading: nameLoading, error: nameError } = useQuery({
     queryKey: ['employees_name', trimmedName],
     enabled: isSearchingByName,
-    queryFn: async () => {
-      const endpoint = `${API}employees/name/${trimmedName}`;
-      const response = await apiFetch(endpoint);
-      return response.json();
-    },
+    queryFn: () => fetchEmployeesByName(trimmedName),
   });
 
   const { data: lastNameData, isLoading: lastNameLoading, error: lastNameError } = useQuery({
     queryKey: ['employees_lastName', trimmedLastName],
     enabled: isSearchingByLastName,
-    queryFn: async () => {
-      const endpoint = `${API}employees/last_name/${trimmedLastName}`;
-      const response = await apiFetch(endpoint);
-      return response.json();
-    },
+    queryFn: () => fetchEmployeesByLastName(trimmedLastName),
   });
   
   const { data: jobs = [], isLoading: jobsLoading } = useQuery({
     queryKey: ['jobs_all'],
-    queryFn: async () => {
-      const res = await apiFetch(`${API}jobs`);
-      return res.json();
-    },
+    queryFn: fetchJobs,
   });
 
   const { data: nationalities = [], isLoading: natLoading } = useQuery({
     queryKey: ['nationalities_all'],
-    queryFn: async () => {
-      const res = await apiFetch(`${API}nationalities`);
-      return res.json();
-    },
+    queryFn: fetchNationalities,
   });
 
   const { data: seniorities = [], isLoading: senLoading } = useQuery({
     queryKey: ['seniorities_all'],
-    queryFn: async () => {
-      const res = await apiFetch(`${API}seniorities`);
-      return res.json();
-    },
+    queryFn: fetchSeniorities,
   });
 
   const catalogsLoading = jobsLoading || natLoading || senLoading;
-
   const isLoading = allLoading || nameLoading || lastNameLoading;
 
   const error =
@@ -158,23 +112,17 @@ export default function Employees() {
   };
 
   const createMutation = useMutation({
-    mutationFn: createEmployeeAPI,
-    onSuccess: () => {
-      invalidateEmployees();
-      closeModal();
-    },
+    mutationFn: createEmployee,
+    onSuccess: () => {invalidateEmployees(); closeModal();},
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, payload }: { id: number; payload: any }) => updateEmployeeAPI(id, payload),
-    onSuccess: () => {
-      invalidateEmployees();
-      closeModal();
-    },
+    mutationFn: ({ id, payload }: { id: number; payload: any }) => updateEmployee(id, payload),
+    onSuccess: () => {invalidateEmployees(); closeModal();},
   });
 
   const deleteMutation = useMutation({
-    mutationFn: deleteEmployeeAPI,
+    mutationFn: deleteEmployee,
     onSuccess: () => invalidateEmployees(),
   });
 
@@ -209,10 +157,7 @@ export default function Employees() {
         className="app-input"
       />
 
-      <button
-        className="app-btn app-btn-primary w-fit cursor-pointer"
-        onClick={openCreate}
-        >
+      <button className="app-btn app-btn-primary w-fit cursor-pointer" onClick={openCreate}>
         Add Employee
       </button>
 
@@ -221,12 +166,7 @@ export default function Employees() {
         <div className="text-red-500">Error saving changes</div>
       )}
 
-      <EmployeesTable
-        employees={data ?? []}
-        isLoading={isLoading}
-        onEdit={openEdit}
-        onDelete={onDelete}
-      />
+      <EmployeesTable employees={data ?? []} isLoading={isLoading} onEdit={openEdit} onDelete={onDelete}/>
 
       <EmployeeForm
         open={modalOpen}
@@ -240,7 +180,6 @@ export default function Employees() {
         onClose={closeModal}
         onSubmit={onSubmitForm}
       />
-
     </div>
   );
 }
